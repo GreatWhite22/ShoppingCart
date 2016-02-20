@@ -64,9 +64,14 @@ public class ShoppingCart
 		public void parse (String inputString){
 			String[] input;
 			input = inputString.split("\\s+");
-			//check for valid input
-			//if (valid){
+			try{
 			executeTransaction(input);
+			}
+			catch(IllegalFormatException e){
+				System.err.println ("Error: Illegal input. Exiting...");
+				e.printStackTrace();
+				System.exit(-1);
+			}
 		} 
 		
 		public void executeTransaction(String input[]){
@@ -74,10 +79,20 @@ public class ShoppingCart
 			switch(operation){
 			case "insert":
 				insertItem(input);
-				//sort cart
+				Collections.sort(cart, new Comparator<Item>() {
+				    @Override
+				    public int compare(Item i1, Item i2) {
+				    	String name1 = i1.name.toLowerCase();
+				    	String name2 = i2.name.toLowerCase();
+				    	return name1.compareTo(name2);
+				    }
+				});
 				break;
 			case "search":
 				searchItem(input);
+				break;
+			case "update":
+				updateItem(input);
 				break;
 			case "delete":
 				deleteItem(input);
@@ -96,23 +111,24 @@ public class ShoppingCart
 			int quantity = Integer.parseInt(input[4]);
 			int weight = Integer.parseInt(input[5]);
 			boolean fragile = false;
-			boolean salesTax = false;
+			boolean salesTax = true;
 			boolean perishable = false;
-			if(category == "electronics"){
-				if(input[6] == "F"){
+			if(category.equals("electronics")){
+				if(input[6].equals("F")){
 						fragile = true;
 				}
 				for(String s: states){
 					if(input[7].contains(s)){ 
-						salesTax = true;
+						salesTax = false;
+						break;
 					}
 				}
 				Item newItem = new Electronics(name, price, quantity, weight, fragile, salesTax);
 				newItem.printItemAttributes();
 				cart.add(newItem);
 			}
-			else if(category == "groceries"){
-				if(input[6] == "P"){
+			else if(category.equals("groceries")){
+				if(input[6].equals("P")){
 					perishable = true;
 				}
 				Item newItem = new Grocery(name, price, quantity, weight, perishable);
@@ -120,7 +136,8 @@ public class ShoppingCart
 				cart.add(newItem);
 			}
 			else{
-			Item newItem = new Item(name, price, quantity, weight);
+			Item newItem = new Clothing(name, price, quantity, weight);
+			newItem.printItemAttributes();
 			cart.add(newItem);
 			}
 		}
@@ -129,55 +146,42 @@ public class ShoppingCart
 			String searchName = input[1];
 			int numberOfInstances = 0;
 			for(int i = 0; i < cart.size(); i++){
-				if(cart.get(i).name == searchName){
+				if(cart.get(i).name.equals(searchName)){
 					numberOfInstances++;
 				}
 			}
-			System.out.println(searchName + " " + numberOfInstances);
+			System.out.println("Search: " + searchName + " " + numberOfInstances);
 		}
 		
 		void deleteItem(String[] input){
 			String deleteName = input[1];
 			int numberOfInstances = 0;
 			for(int i = 0; i < cart.size(); i++){
-				if(cart.get(i).name == deleteName){
+				if(cart.get(i).name.equals(deleteName)){
 					cart.remove(i);
 					numberOfInstances++;
 				}
 			}
-			System.out.println(deleteName + " " + numberOfInstances);
+			System.out.println("Delete: " + deleteName + " " + numberOfInstances);
 		}
 		
 		void updateItem(String[] input){
 			String updateName = input[1];
-			int newQuantity = Integer.parseInt(input[3]);
+			int newQuantity = Integer.parseInt(input[2]);
 			for(int i = 0; i < cart.size(); i++){
-				if(cart.get(i).name == updateName){
+				if(cart.get(i).name.equals(updateName)){
 					cart.get(i).quantity = newQuantity;
-					System.out.println(updateName + " " + newQuantity);
+					System.out.println("Update: " + updateName + " " + newQuantity);
 					return;
 				}
 			}
 		}
+		
 		void printCart(){
 			for(int i = 0; i < cart.size(); i++){
 				Item printItem = cart.get(i);
-				System.out.println(printItem.name + " " + printItem.quantity + " " + printItem.calculatePrice());
+				System.out.println(printItem.name + " " + printItem.quantity + " $" + printItem.calculatePrice());
 			}
-		}
-		
-//		public void InsertionSort(Item newItem)
-//		{
-//		     int j;
-//		     int i;  
-//
-//		     for (j = 0; j < cart.size(); j++){
-//		           newItem = cart.get(j);
-//		           for(i = j - 1; (i >= 0) && (num[ i ] < key); i--)   // Smaller values are moving up
-//		          {
-//		                 num[ i+1 ] = num[ i ];
-//		          }
-//		         num[ i+1 ] = key;    // Put the key in its proper location
-//		     }
-//		}
+		}		
 }
+
