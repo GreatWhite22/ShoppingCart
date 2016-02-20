@@ -2,21 +2,32 @@ package Assignment3;
 
 public class Item 
 {
-//Declare variables for this class. Think about its type: public, protected or private?
+	protected String name;
+	protected float price;
+	protected int quantity;
+	protected int weight;
+	protected double SALES_TAX = 0.1;
+	protected double PREMIUM_SHIPPING = 0.2;
 
-// You will need a constructor (Why?). Create it here.
+	Item(String givenName, float givenPrice, int givenQuantity, int givenWeight){
+		name = givenName;
+		price = givenPrice;
+		quantity = givenQuantity;
+		weight = givenWeight;
+	}
 	
 	float calculatePrice () 
 	{
 		float final_price = 0;
-		// Insert price calculation here
+		int shipping_price = 20 * weight * quantity;
+		final_price += price;
+		final_price += shipping_price;
 		return final_price;
 	}
 	
 
 	void printItemAttributes () 
 	{
-		//Print all applicable attributes of this class
+		System.out.println(name + " " + price + " " + quantity + " " + weight);
 	}
-
 }
