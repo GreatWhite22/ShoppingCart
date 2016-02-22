@@ -102,6 +102,8 @@ public class ShoppingCart
 		boolean insertItem(String input[]){
 			try{										
 			String[] states = new String[]{"tx", "nm", "va", "az", "ak"}; //list of all the states that will be not be included in sales tax
+			String OtherStates = new String();
+			OtherStates = "AL AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NY NC ND OH OK OR PA RI SC SD TN UT VT WA WV WI WY";
 			String category = input[1];
 			String name = input[2];
 			float price = Float.parseFloat(input[3]);
@@ -129,11 +131,20 @@ public class ShoppingCart
 					System.out.println ("Error: must be F/NF for input. This request has been abandoned...");				
 					return false;
 				}
+				boolean ValidState = false;
 				for(String s: states){		//comparing to check if there should be sales tax or not
 					if((input[7].toLowerCase()).contains(s)){ 					// state requirment set to lower case, if state does not match then regular sales tax applied
 						salesTax = false;
+						ValidState = true;
 						break;
 					}
+					else if((OtherStates.toLowerCase()).contains((input[7].toLowerCase()))){	// check to see if the state actually exists or not
+						ValidState = true;
+					}
+				}
+				if (ValidState == false){
+					System.out.println ("Error: must be a valid state for input. This request has been abandoned...");				
+					return false;
 				}
 				Item newItem = new Electronics(name, price, quantity, weight, fragile, salesTax);
 				newItem.printItemAttributes();
@@ -198,6 +209,7 @@ public class ShoppingCart
 				if(cart.get(i).name.equals(deleteName)){
 					numberOfInstances += cart.get(i).quantity;
 					cart.remove(i);
+					i = i-1;
 				}
 			}
 			System.out.println("Delete: " + deleteName + " " + numberOfInstances);

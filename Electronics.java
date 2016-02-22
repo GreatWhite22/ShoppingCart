@@ -27,6 +27,34 @@ public class Electronics extends Item
 		return final_price;
 	}
 
+	/**
+	 * @return the fragile
+	 */
+	public boolean isFragile() {
+		return fragile;
+	}
+
+	/**
+	 * @return the salesTax
+	 */
+	public boolean isSalesTax() {
+		return salesTax;
+	}
+
+	/**
+	 * @param fragile the fragile to set
+	 */
+	public void setFragile(boolean fragile) {
+		this.fragile = fragile;
+	}
+
+	/**
+	 * @param salesTax the salesTax to set
+	 */
+	public void setSalesTax(boolean salesTax) {
+		this.salesTax = salesTax;
+	}
+
 	void printItemAttributes () 
 	{
 		System.out.println(name + " " + price + " " + quantity + " " + weight + " fragile="

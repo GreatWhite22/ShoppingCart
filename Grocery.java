@@ -9,6 +9,20 @@ public class Grocery extends Item {
 		perishable = givenFragile;
 	}
 	
+	/**
+	 * @return the perishable
+	 */
+	public boolean isPerishable() {
+		return perishable;
+	}
+
+	/**
+	 * @param perishable the perishable to set
+	 */
+	public void setPerishable(boolean perishable) {
+		this.perishable = perishable;
+	}
+
 	float calculatePrice()			// calculates final price based on shipping cost price and then price per item plus premium shipping if included
 	{
 		float final_price = 0;
