@@ -9,12 +9,11 @@ public class Grocery extends Item {
 		perishable = givenFragile;
 	}
 	
-	float calculatePrice()
+	float calculatePrice()			// calculates final price based on shipping cost price and then price per item plus premium shipping if included
 	{
 		float final_price = 0;
 		int shipping_price = 20 * weight * quantity;
-		final_price += price;
-		final_price += price * SALES_TAX;
+		final_price += (price * quantity);
 		final_price += shipping_price;
 		if(perishable){
 			final_price += shipping_price * PREMIUM_SHIPPING;

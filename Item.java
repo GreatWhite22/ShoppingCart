@@ -26,6 +26,62 @@ public class Item
 	}
 	
 
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return the price
+	 */
+	public float getPrice() {
+		return price;
+	}
+
+	/**
+	 * @return the quantity
+	 */
+	public int getQuantity() {
+		return quantity;
+	}
+
+	/**
+	 * @return the weight
+	 */
+	public int getWeight() {
+		return weight;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	void printItemAttributes () 
 	{
 		System.out.println(name + " " + price + " " + quantity + " " + weight);

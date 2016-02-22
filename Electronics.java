@@ -12,11 +12,11 @@ public class Electronics extends Item
 		salesTax = givenSalesTax;
 	}
 	
-	float calculatePrice () 
+	float calculatePrice () 		// calculates final price based on the shipping cost with added sales tax if appropriate state and then if fragile then add premium shipping + price per item
 	{
 		float final_price = 0;
 		int shipping_price = 20 * weight * quantity;
-		final_price += price;
+		final_price += (price * quantity);
 		if(salesTax){
 			final_price += price * SALES_TAX;
 		}
