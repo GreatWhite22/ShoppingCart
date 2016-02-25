@@ -1,3 +1,8 @@
+/*# ShoppingCart
+EE 422C assignment 3 - Shopping Cart
+Group #46 
+Connor Lewis - csl735, Salim Memon - sam6345*/
+
 package Assignment3;
 
 public class Item 
